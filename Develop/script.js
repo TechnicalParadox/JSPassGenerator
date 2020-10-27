@@ -1,50 +1,57 @@
 // Assignment code here
+var promptLength = function()
+{
+  return window.prompt("Enter a password length from 8-128 characters:");
+}
+
+var promptChars = function()
+{
+  var options = [false, false, false, false];
+  options[0] = window.confirm("Use lowercase characters? (a-z):");
+  options[1] = window.confirm("Use uppercase characters? (A-Z):");
+  options[2] = window.confirm("Use numeric characters? (0-9):");
+  options[3] = window.confirm("Use special characters? ('!', '[', '=', etc.):");
+  return options;
+}
+
 var generatePassword = function()
 {
   // Get password length
   var passLength = 0;
-  passLength = window.prompt("Enter a password length from 8-128 characters:"); // Ask first time
+  passLength = promptLength(); // Ask first time
   while (passLength < 8 || passLength > 128) // Verify user enters valid option, if not, prompt until they do.
   {
     window.alert("Invalid Length (8-128 req.)"); // Notify of problem
-    passLength = window.prompt("Enter a password length from 8-128 characters:"); // Ask again
+    passLength = promptLength(); // Ask again
   }
 
-  // Ask for character types
-  var lc = false, uc = false, nu = false, sc = false;
-  // Ask first time
-  lc = window.confirm("Use lowercase characters? (a-z):");
-  uc = window.confirm("Use uppercase characters? (A-Z):");
-  nu = window.confirm("Use numeric characters? (0-9):");
-  sc = window.confirm("Use special characters? ('!', '[', '=', etc.):");
-  while (!(lc || uc || nu || sc)) // Verify user selects at least one option, if not, prompt until they do.
+  // Ask for character options, indecies: 0 = lowercase, 1 = uppercase, 2 = numeric, 3 = special
+  var options = promptChars();
+  while (!(options[0] || options[1] || options[2] || options[3])) // Verify user selects at least one option, if not, prompt until they do.
   {
     window.alert("You must select 'Ok' for at least one option."); // Notify of problem
     // Ask again
-    lc = window.confirm("Use lowercase characters? (a-z):");
-    uc = window.confirm("Use uppercase characters? (A-Z):");
-    nu = window.confirm("Use numeric characters? (0-9):");
-    sc = window.confirm("Use special characters? ('!', '[', '=', etc.):");
+    options = promptChars();
   }
 
   // Create array of useable chars
   var useableChars = [];
-  if (lc) // Add lowercase chars if selected
+  if (options[0]) // Add lowercase chars if selected
   {
     for (var i = 97; i <= 122; i++)
       useableChars.push(String.fromCharCode(i));
   }
-  if (uc) // Add uppercase chars if selected
+  if (options[1]) // Add uppercase chars if selected
   {
     for (var i = 65; i <= 90; i++)
       useableChars.push(String.fromCharCode(i));
   }
-  if (nu) // Add numeric chars if selected
+  if (options[2]) // Add numeric chars if selected
   {
     for (var i = 48; i <= 57; i++)
       useableChars.push(String.fromCharCode(i));
   }
-  if (sc) // Add special chars if selected
+  if (options[3]) // Add special chars if selected
   {
     for (var i = 32; i <= 47; i++)
       useableChars.push(String.fromCharCode(i));
