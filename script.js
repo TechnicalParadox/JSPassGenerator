@@ -19,7 +19,7 @@ var generatePassword = function()
   // Get password length
   var passLength = 0;
   passLength = promptLength(); // Ask first time
-  while (passLength < 8 || passLength > 128) // Verify user enters valid option, if not, prompt until they do.
+  while ((passLength < 8 || passLength > 128) || !parseInt(passLength)) // Verify user enters valid option, if not, prompt until they do.
   {
     window.alert("Invalid Length (8-128 req.)"); // Notify of problem
     passLength = promptLength(); // Ask again
